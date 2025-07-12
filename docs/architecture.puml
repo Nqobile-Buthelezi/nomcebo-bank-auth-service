@@ -1,0 +1,107 @@
+@startuml nomcebo-bank-auth-service-architecture
+
+!define RECTANGLE class
+!define COMPONENT component
+
+title Nomcebo Bank Identity and Access Management Service Architecture
+
+package "External Systems" {
+    [Keycloak Server] as KC
+    [Database] as DB
+    [API Gateway] as GW
+}
+
+package "Auth Service" {
+    package "Controller Layer" {
+        [AuthController] as AC
+        [UserController] as UC
+    }
+
+    package "Services Layer" {
+        [AuthService] as AS
+        [UserService] as US
+        [TokenService] as TS
+        [KeycloakService] as KS
+    }
+
+    package "Repository Layer" {
+        [UserRepository] as UR
+        [AuditRepository] as AR
+    }
+
+    package "Security Layer" {
+        [SecurityConfig] as SC
+        [JwtAuthenticationFiler] as JAF
+        [KeycloakAuthenticationProvider] as KAP
+    }
+
+    package "Model Layer" {
+        [User] as U
+        [Role] as R
+        [AuditLog] as AL
+    }
+}
+
+package "External Services" {
+    [User Service] as EUS
+    [Notification Service] as NS
+}
+
+' External connections
+GW --> AC : HTTP Requests
+GW --> UC : HTTP Requests
+
+' Controller to Service
+AC --> AS : Business Logic
+UC --> US : User Management
+AC --> TS : Token Operations
+
+' Service to Repository
+AS --> UR : User Data
+US --> UR : User CRUD
+AS --> AR : Audit Logging
+
+' Service to External
+AS --> KS : Keycloak Integration
+KS --> KC : Admin API
+US --> NS : Notifications
+
+' Security Layer
+SC --> JAF : Filter CHain
+JAF --> KAP : Authentication
+KAP --> KC : Token Validation
+
+' Repository to Database
+UR --> DB : User Data
+AS --> AL : Creates Audit
+
+' Model Relationships
+U --> R : Has a Role
+AS --> AL : Creates Audit
+
+note right of KC
+    Keycloak handles:
+    - User Authentication
+    - JWT Token Generation
+    - Role Management
+    - SSO Integration
+end note
+
+note right of DB
+    Database stores:
+    - User Profiles
+    - Audit Logs
+    - Session Data
+    - Application Metadata
+end note
+
+note bottom of AS
+    Authentication Service provides:
+    - User Registration
+    - Login / Logout
+    - Token Refresh
+    - Profile Management
+    - Audit Logging
+end note
+
+@enduml
