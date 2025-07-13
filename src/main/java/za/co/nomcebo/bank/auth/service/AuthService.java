@@ -22,7 +22,6 @@ import za.co.nomcebo.bank.auth.util.SouthAfricanIdValidator;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -55,7 +54,6 @@ public class AuthService {
     private final JwtTokenProvider tokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final KeycloakService keycloakService;
-    private final NotificationService notificationService;
     private final SouthAfricanIdValidator idValidator;
 
     @Value("${nomcebo.auth.max-login-attempts:5}")
@@ -79,7 +77,7 @@ public class AuthService {
      * @return Authentication response with JWT tokens
      * @throws AuthenticationException if authentication fails
      */
-    public LoginResponseDTO authenticate(loginRequestDTO loginRequest, String ipAddress) {
+    public LoginResponseDTO authenticate(LoginRequestDTO loginRequest, String ipAddress) {
         String username = loginRequest.getUsername();
 
         // Check if account is locked
@@ -193,7 +191,7 @@ public class AuthService {
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
                 .phoneNumber(registerRequest.getPhoneNumber())
-                .saIdNumber(saIdNumber)
+                .southAfricanIdNumber(saIdNumber)
                 .dateOfBirth(dateOfBirth)
                 .gender(gender)
                 .address(registerRequest.getAddress())
@@ -214,9 +212,6 @@ public class AuthService {
 
         // Create user in Keycloak
         keycloakService.createUser(savedUser, registerRequest.getPassword());
-
-        // Send welcome email with verification link
-        notificationService.sendWelcomeEmail(savedUser);
 
         // Log successful registration
         logAuditEvent("REGISTRATION_SUCCESS", email, ipAddress, "User registered successfully");
@@ -334,9 +329,6 @@ public class AuthService {
         user.setPasswordResetExpiry(LocalDateTime.now().plusHours(1));
         userRepository.save(user);
 
-        // Send reset email
-        notificationService.sendPasswordResetEmail(user, resetToken);
-
         logAuditEvent("PASSWORD_RESET_INITIATED", email, "unknown", "Password reset initiated");
 
         return PasswordResetResponseDTO.builder()
@@ -376,7 +368,7 @@ public class AuthService {
      */
     private void logAuditEvent(String eventType, String username, String ipAddress, String description) {
         AuditLog auditLog = AuditLog.builder()
-                .id(UUID.randomUUID().toString())
+                .id(UUID.randomUUID())
                 .eventType(eventType)
                 .username(username)
                 .ipAddress(ipAddress)
@@ -401,7 +393,7 @@ public class AuthService {
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .phoneNumber(user.getPhoneNumber())
-                    .saIdNumber(user.getSaIdNumber())
+                    .southAfricanIdNumber(user.getSouthAfricanIdNumber())
                     .dateOfBirth(user.getDateOfBirth())
                     .build();
         }

@@ -134,7 +134,7 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
-            @Valid @RequestBody loginRequestDTO loginRequest,
+            @Valid @RequestBody LoginRequestDTO loginRequest,
             HttpServletRequest request
     ) {
         log.info(

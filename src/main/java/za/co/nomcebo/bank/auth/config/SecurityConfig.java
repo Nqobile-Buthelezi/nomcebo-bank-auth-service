@@ -167,7 +167,7 @@ public class SecurityConfig {
 
         // Set allowed origins from configuration
         configuration.setAllowedOrigins(allowedOrigins != null ? allowedOrigins :
-                Arrays.asList("http://localhost:3000", "https://nomcebo-bank.co.za"));
+                List.of("http://localhost:3000"));
 
         // Set allowed methods
         configuration.setAllowedMethods(Arrays.asList(

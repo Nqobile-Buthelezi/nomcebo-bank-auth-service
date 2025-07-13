@@ -31,7 +31,7 @@ public class KeycloakService {
         userRep.setLastName(user.getLastName());
         userRep.setEnabled(true);
         userRep.setEmailVerified(false);
-        userRep.setAttributes(Collections.singletonMap("saIdNumber", Collections.singletonList(user.getSaIdNumber())));
+        userRep.setAttributes(Collections.singletonMap("saIdNumber", Collections.singletonList(user.getSouthAfricanIdNumber())));
 
         CredentialRepresentation credential = new CredentialRepresentation();
         credential.setType(CredentialRepresentation.PASSWORD);

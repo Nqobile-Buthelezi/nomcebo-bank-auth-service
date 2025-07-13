@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class loginRequestDTO {
+public class LoginRequestDTO {
     @NotBlank(message = "Username is required.")
     @Size(max = 35, message = "Username cannot exceed 35 characters.")
     private String username;
