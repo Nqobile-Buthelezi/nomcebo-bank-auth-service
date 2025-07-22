@@ -99,26 +99,46 @@ docker run -p 8080:8080 nomcebo-bank/auth-service
 |----------|-------------|---------|
 | `KEYCLOAK_URL` | Keycloak server URL | `http://localhost:8090` |
 | `KEYCLOAK_REALM` | Keycloak realm | `nomcebo-bank` |
-| `KEYCLOAK_CLIENT_ID` | Client ID | `auth-service` |
-| `DATABASE_URL` | Database connection URL | `jdbc:h2:mem:testdb` |
-| `JWT_SECRET` | JWT signing secret | `changeme` |
+| `KEYCLOAK_CLIENT_ID` | Client ID | `nb-auth-service` |
+| `DATABASE_URL` | Database connection URL | `jdbc:h2:mem:nomcebo-bank-db` |
+| `JWT_SECRET` | JWT signing secret | `your-very-secure-secret-key` |
+| `MAIL_USERNAME` | Email service username | `placeholder` |
 
 ### Application Properties
 
 ```properties
 # Server Configuration
 server.port=8080
-spring.application.name=auth-service
+spring.application.name=nb-auth-service
 
 # Database Configuration
-spring.datasource.url=${DATABASE_URL:jdbc:h2:mem:testdb}
+spring.datasource.url=${DATABASE_URL:jdbc:h2:mem:nomcebo-bank-db}
 spring.datasource.driver-class-name=org.h2.Driver
 spring.jpa.hibernate.ddl-auto=update
 
 # Keycloak Configuration
 keycloak.auth-server-url=${KEYCLOAK_URL:http://localhost:8090}
 keycloak.realm=${KEYCLOAK_REALM:nomcebo-bank}
-keycloak.resource=${KEYCLOAK_CLIENT_ID:auth-service}
+keycloak.resource=${KEYCLOAK_CLIENT_ID:nb-auth-service}
+
+# Keycloak Admin Configuration
+keycloak.admin.username=admin
+keycloak.admin.password=admin
+keycloak.admin.client-secret=
+
+# Security Configuration
+jwt.secret=your-very-secure-secret-key
+nomcebo.auth.max-login-attempts=5
+nomcebo.auth.lockout-duration=30
+
+# CORS Configuration
+nomcebo.cors.allowed-origins=http://localhost:3000
+
+# Documentation
+springdoc.swagger-ui.path=/swagger-ui.html
+
+# Logging
+logging.level.root=info
 ```
 
 ## Testing

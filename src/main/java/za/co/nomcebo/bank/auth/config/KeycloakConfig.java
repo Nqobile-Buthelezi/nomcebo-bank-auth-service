@@ -25,16 +25,17 @@ public class KeycloakConfig {
     @Value("${keycloak.admin.password}")
     private String password;
 
-    @Value("${keycloak.admin.client-secret:}")
+    @Value("${keycloak.admin.client-secret}")
     private String clientSecret;
 
     @Bean
-    public Keycloak keycloak() {
+    public Keycloak keycloak()
+    {
         return KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
-                .realm(realm)
+                .realm("master") // Use master realm for admin operations
                 .grantType(OAuth2Constants.PASSWORD)
-                .clientId(clientId)
+                .clientId("admin-cli") // Use admin-cli client for admin operations
                 .clientSecret(clientSecret.isEmpty() ? null : clientSecret)
                 .username(username)
                 .password(password)

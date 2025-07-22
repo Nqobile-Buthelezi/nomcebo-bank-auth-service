@@ -34,7 +34,7 @@ import java.util.List;
  * - JWT token-based authentication
  * - Keycloak integration for identity management
  * - CORS configuration for web clients
- * - Method-level security authorization
+ * - Method-level security authorisation
  * - Rate limiting and security headers
  * - Compliance with South African banking security standards
  * </p>
@@ -70,14 +70,14 @@ public class SecurityConfig {
 
     /**
      * Configures the main security filter chain.
-     *
+     * <p>
      * Security configuration includes:
      * - Public endpoints for authentication
      * - Protected endpoints requiring authentication
      * - JWT token processing
      * - Exception handling
      * - Security headers for banking compliance
-     *
+     * </p>
      * @param http HttpSecurity configuration
      * @return SecurityFilterChain
      * @throws Exception if configuration fails
@@ -99,7 +99,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptions ->
                         exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint))
 
-                // Configure authorization rules
+                // Configure authorisation rules
                 .authorizeHttpRequests(authz -> authz
                         // Public endpoints
                         .requestMatchers(
@@ -153,12 +153,12 @@ public class SecurityConfig {
 
     /**
      * Configures CORS for cross-origin requests.
-     *
+     * <p>
      * Allows requests from approved origins including:
      * - Local development environments
      * - Production web applications
      * - Mobile applications
-     *
+     * </p>
      * @return CorsConfigurationSource
      */
     @Bean

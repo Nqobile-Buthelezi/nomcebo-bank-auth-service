@@ -48,7 +48,7 @@ public class AuthController {
      * <p>
      * Creates new user in Keycloak with appropriate roles for South African Banking
      * Validates SA ID number format and performs KYC checks.
-     *
+     * </p>
      * @param registerRequest new user registration details
      * @param request         HTTP request for IP tracking
      * @return Registration confirmation and user details
@@ -78,7 +78,8 @@ public class AuthController {
     public ResponseEntity<RegisterResponseDTO> register(
             @Valid @RequestBody RegisterRequestDTO registerRequest,
             HttpServletRequest request
-    ) {
+    )
+    {
         log.info(
                 "Registration attempt for email: {} from IP: {}",
                 registerRequest.getEmail(), request.getRemoteAddr()
