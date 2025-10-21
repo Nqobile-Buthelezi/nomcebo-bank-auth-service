@@ -36,3 +36,22 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Environment and Secrets ###
+.env
+.env.local
+.env.production
+*.key
+*.pem
+*.p12
+*.jks
+application-secrets.properties
+
+### Logs ###
+*.log
+logs/
+
+### Temporary Files ###
+*.tmp
+*.temp
+*~
