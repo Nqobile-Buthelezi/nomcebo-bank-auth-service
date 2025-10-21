@@ -29,6 +29,8 @@ It provides secure authentication, authorisation, and user management capabiliti
 
 ## Quick Start
 
+**New to the project?** Check out our [Quick Start Guide](QUICKSTART.md) for a 5-minute setup!
+
 ### Prerequisites
 
 - Java 17+
