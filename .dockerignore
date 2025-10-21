@@ -1,0 +1,34 @@
+# Ignore version control
+.git
+.gitignore
+
+# Ignore IDE files
+.idea
+.vscode
+*.iml
+*.ipr
+*.iws
+
+# Ignore build artifacts
+target/
+build/
+
+# Ignore test files
+src/test/
+
+# Ignore documentation
+docs/
+*.md
+!README.md
+
+# Ignore Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Ignore logs
+*.log
+
+# Ignore OS files
+.DS_Store
+Thumbs.db

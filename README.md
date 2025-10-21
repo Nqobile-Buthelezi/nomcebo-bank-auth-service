@@ -158,17 +158,78 @@ mvn verify -Dspring.profiles.active=test
 mvn jacoco:report
 ```
 
+## Documentation
+
+- **[API Documentation](docs/API.md)** - Complete API reference with examples
+- **[Configuration Guide](docs/CONFIGURATION.md)** - Environment setup and configuration
+- **[Security Best Practices](docs/SECURITY.md)** - Security implementation details
+- **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to this project
+- **[Architecture Documentation](docs/architecture.puml)** - System design and architecture
+
 ## Architecture
 
 See [Architecture Documentation](docs/architecture.puml) for detailed system design.
 
+## Troubleshooting
+
+### Common Issues
+
+**Problem: Application fails to start**
+```
+Error: Could not connect to database
+Solution: Ensure PostgreSQL/H2 is running and DATABASE_URL is correct
+```
+
+**Problem: Keycloak connection failed**
+```
+Error: Failed to create user in Keycloak
+Solution: 
+1. Verify Keycloak is running: docker-compose ps
+2. Check KEYCLOAK_URL in application.properties
+3. Ensure realm 'nomcebo-bank' exists in Keycloak
+```
+
+**Problem: JWT token validation fails**
+```
+Error: Invalid token signature
+Solution: Verify JWT_SECRET is consistent across all instances
+```
+
+**Problem: Build fails with compilation errors**
+```
+Error: Package does not exist
+Solution: Run 'mvn clean install' to download all dependencies
+```
+
+**Problem: Port already in use**
+```
+Error: Port 8080 is already in use
+Solution: Change server.port in application.properties or stop conflicting process
+```
+
+### Getting Help
+
+- Check [API Documentation](docs/API.md) for endpoint details
+- Review [Configuration Guide](docs/CONFIGURATION.md) for setup instructions
+- See [Security Documentation](docs/SECURITY.md) for security-related issues
+- Open an issue on GitHub for bugs or feature requests
+
 ## Contributing
 
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+Quick steps:
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/new-feature`)
 3. Commit changes (`git commit -m 'Add new feature'`)
 4. Push to branch (`git push origin feature/new-feature`)
 5. Open Pull Request
+
+Please ensure:
+- Code follows project style guidelines
+- All tests pass
+- Documentation is updated
+- Security best practices are followed
 
 ## Security
 
